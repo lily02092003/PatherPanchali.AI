@@ -27,7 +27,9 @@ const Chatbot = ({ onClose }) => {
 
     try {
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta1/models/gemini-pro:generateContent?key=AIzaSyCHtkYXFviMBwK7YP4RS603A8Q4ml-K66w`,
+        `https://generativelanguage.googleapis.com/v1beta1/models/gemini-pro:generateContent?key=${
+          import.meta.env.VITE_GOOGLE_APIKEY
+        }`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

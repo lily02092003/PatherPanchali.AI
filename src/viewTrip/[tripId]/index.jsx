@@ -9,13 +9,11 @@ import { sendChatMessage } from "@/service/GeminiChatService";
 import { useRef } from "react";
 import fetchDistanceMatrix from "@/service/Djikstra";
 
-
 const PHOTO_REF_URL =
   "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=445&maxWidthPx=640&key=" +
   import.meta.env.VITE_GLOBAL_API;
 
 function ViewTrip() {
-
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [response, setResponse] = useState("");
@@ -58,7 +56,7 @@ function ViewTrip() {
   const [predictions, setPredictions] = useState({});
   const [showPopup, setShowPopup] = useState(false);
 
-  const API_KEY = "AIzaSyC8oQwBjWG5ZjC34jEpj10BKGb3YnY_sCQ";
+  const API_KEY = import.meta.env.VITE_GLOBAL_API;
   const AUTOCOMPLETE_URL =
     "https://places.googleapis.com/v1/places:autocomplete";
   const PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places/";
@@ -76,10 +74,10 @@ function ViewTrip() {
     currency === "INR"
       ? "₹"
       : currency === "USD"
-        ? "$"
-        : currency === "EUR"
-          ? "€"
-          : currency + " ";
+      ? "$"
+      : currency === "EUR"
+      ? "€"
+      : currency + " ";
 
   const GetPlacePhoto = async () => {
     const itinerary = tripData?.itinerary?.travel_plan?.itinerary;
@@ -108,7 +106,10 @@ function ViewTrip() {
             }
           })
           .catch((error) => {
-            console.error("❌ Error fetching photo for ${activity.name}:", error);
+            console.error(
+              "❌ Error fetching photo for ${activity.name}:",
+              error
+            );
           });
 
         fetchPromises.push(fetchPromise);
@@ -261,13 +262,12 @@ function ViewTrip() {
   };
 
   const handleDeleteActivity = (date, index) => {
-    setActivityList(prev => {
+    setActivityList((prev) => {
       const updated = [...(prev[date] || [])];
-      updated.splice(index, 1);         // ← remove the item completely
+      updated.splice(index, 1); // ← remove the item completely
       return { ...prev, [date]: updated };
     });
   };
-
 
   const handleSaveChanges = async () => {
     if (!tripId || !tripData) return;
@@ -287,7 +287,6 @@ function ViewTrip() {
       },
       {}
     );
-    
 
     const updatedTripData = {
       ...tripData,
@@ -349,14 +348,15 @@ function ViewTrip() {
         </h2>
 
         {itineraryByDate ? (
-          Object
-            .keys(itineraryByDate)
+          Object.keys(itineraryByDate)
             .sort((a, b) => new Date(a) - new Date(b))
             .map((date, index) => {
               const activities = activityList[date] || [];
-              const dayWeather = weather?.[`day${index+1}`];
-              const emoji = getWeatherEmoji(dayWeather?.condition || '');
-              const temp = `${dayWeather?.minTemp || 'N/A'} - ${dayWeather?.maxTemp || 'N/A'}`;
+              const dayWeather = weather?.[`day${index + 1}`];
+              const emoji = getWeatherEmoji(dayWeather?.condition || "");
+              const temp = `${dayWeather?.minTemp || "N/A"} - ${
+                dayWeather?.maxTemp || "N/A"
+              }`;
 
               return (
                 <div key={index} className="mb-10">
@@ -377,7 +377,10 @@ function ViewTrip() {
                     {activities.map((act, idx) => {
                       if (act === null) {
                         return (
-                          <div key={idx} className="relative pt-12 p-4 bg-white/65 rounded-md border border-black shadow text-gray-500 italic">
+                          <div
+                            key={idx}
+                            className="relative pt-12 p-4 bg-white/65 rounded-md border border-black shadow text-gray-500 italic"
+                          >
                             <p>This activity has been deleted.</p>
                           </div>
                         );
@@ -388,7 +391,7 @@ function ViewTrip() {
                         act.place_image_url &&
                         act.details &&
                         act.timings &&
-                        (typeof act.pricing === 'number' || act.pricing) &&
+                        (typeof act.pricing === "number" || act.pricing) &&
                         act.location;
 
                       return (
@@ -599,8 +602,6 @@ function ViewTrip() {
                         </div>
                       );
                     })}
-
-
                   </div>
 
                   <div className="mt-4 flex justify-end">
@@ -651,7 +652,6 @@ function ViewTrip() {
             </Link>
           </div>
         </div>
-
       </section>
 
       {/* Popup Modal */}
@@ -664,7 +664,6 @@ function ViewTrip() {
             >
               <button
                 onClick={() => setShowPopup(false)}
-
                 className="absolute top-2 right-2 text-amber-600 hover:text-amber-800 text-xl"
               >
                 ✖
@@ -673,13 +672,13 @@ function ViewTrip() {
               <h3 className="text-lg italic text-amber-800 mb-6 leading-relaxed">
                 Much like the unfolding scenes of{" "}
                 <span className="font-semibold">Pother Panchali</span>, this
-                itinerary guides you through the city day by day — a curated journey
-                of stories, sights, and moments. <br />
+                itinerary guides you through the city day by day — a curated
+                journey of stories, sights, and moments. <br />
                 <br />
                 Feel free to make it your own — adjust the time sequence, add
-                activities that speak to you, skip the ones that don’t, or rearrange
-                them to match your pace. After all, every traveller writes their own
-                chapter.
+                activities that speak to you, skip the ones that don’t, or
+                rearrange them to match your pace. After all, every traveller
+                writes their own chapter.
               </h3>
 
               <h2 className="text-xl font-bold mb-4 text-amber-800">
@@ -691,7 +690,8 @@ function ViewTrip() {
                     <li>
                       Accommodation: {currencySymbol}
                       {
-                        tripData.itinerary.travel_plan.estimated_budget.accommodation
+                        tripData.itinerary.travel_plan.estimated_budget
+                          .accommodation
                       }
                     </li>
                     <li>
@@ -708,7 +708,8 @@ function ViewTrip() {
                     <li>
                       Activities: {currencySymbol}
                       {
-                        tripData.itinerary.travel_plan.estimated_budget.activities
+                        tripData.itinerary.travel_plan.estimated_budget
+                          .activities
                       }
                     </li>
                     <li className="font-semibold">
@@ -763,17 +764,23 @@ function ViewTrip() {
                 <h2 className="text-2xl font-bold text-center mb-2">DURGA</h2>
 
                 {/* Messages Box */}
-                <div className="flex-1 overflow-y-auto bg-transparent bg-opacity-80 border border-transparent rounded p-2 space-y-2" style={{ fontFamily: "Edmund" }}>
+                <div
+                  className="flex-1 overflow-y-auto bg-transparent bg-opacity-80 border border-transparent rounded p-2 space-y-2"
+                  style={{ fontFamily: "Edmund" }}
+                >
                   {messages.length === 0 && (
-                    <p className="text-center font-semibold text-lg">Hi! I am Durga! Here to help you!</p>
+                    <p className="text-center font-semibold text-lg">
+                      Hi! I am Durga! Here to help you!
+                    </p>
                   )}
                   {messages.map((msg, index) => (
                     <div
                       key={index}
-                      className={`p-2 rounded-md max-w-[80%] ${msg.role === "user"
-                        ? "bg-gray-200 self-end text-right ml-auto"
-                        : "bg-blue-100 self-start text-left mr-auto"
-                        }`}
+                      className={`p-2 rounded-md max-w-[80%] ${
+                        msg.role === "user"
+                          ? "bg-gray-200 self-end text-right ml-auto"
+                          : "bg-blue-100 self-start text-left mr-auto"
+                      }`}
                     >
                       {msg.text}
                     </div>
@@ -782,11 +789,15 @@ function ViewTrip() {
                 </div>
 
                 {/* Input Box */}
-                <div className="mt-2 flex items-center " style={{ fontFamily: "Edmund" }}>
+                <div
+                  className="mt-2 flex items-center "
+                  style={{ fontFamily: "Edmund" }}
+                >
                   <input
                     type="text"
                     placeholder="What's on your mind, traveller? "
-                    className="flex-1 border border-black p-2 bg-white bg-opacity-70 placeholder-gray" style={{ fontFamily: "Edmund" }}
+                    className="flex-1 border border-black p-2 bg-white bg-opacity-70 placeholder-gray"
+                    style={{ fontFamily: "Edmund" }}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                   />
@@ -813,7 +824,6 @@ function ViewTrip() {
           </div>
         )}
       </>
-
     </div>
   );
 }
