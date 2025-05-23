@@ -14,6 +14,7 @@ Just like the film that threads together life’s struggles and joys into an unf
 ### 🚀 What We Offer
 
 **PotherPanchali.AI** is not just a travel planner — it's a **storyteller** that walks beside you:
+**PotherPanchali.AI** is not just a travel planner — it's a **storyteller** that walks beside you:
 
 - ✨ **Personalized AI-powered itineraries** tailored to your interests and pace  
 - 🌟 Discover **hidden gems** and offbeat experiences curated just for you  
