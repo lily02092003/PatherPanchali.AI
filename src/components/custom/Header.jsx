@@ -60,7 +60,7 @@ function Header() {
   return (
     <div className="p-3 flex justify-between items-center px-5 bg-transparent absolute top-0 left-0 w-full z-50">
       <div className="flex items-center" style={{ gap: "2px" }}>
-        <img src={logo} alt="Logo" style={{ width: "280px", height: "auto" }} />
+        <img src={logo} alt="Logo" style={{ width: "240px", height: "auto" }} />
         <span
           style={{
             fontFamily: "'Cinzel', serif",
