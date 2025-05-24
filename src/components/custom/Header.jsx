@@ -59,19 +59,18 @@ function Header() {
 
   return (
     <div className="p-3 flex justify-between items-center px-5 bg-transparent absolute top-0 left-0 w-full z-50">
-      <div className="flex items-center" style={{ gap: "8px" }}>
-        <img src={logo} alt="Logo" style={{ width: "70px", height: "auto" }} />
+      <div className="flex items-center" style={{ gap: "2px" }}>
+        <img src={logo} alt="Logo" style={{ width: "220px", height: "auto" }} />
         <span
           style={{
             fontFamily: "'Cinzel', serif",
             fontSize: "1.8rem",
             fontWeight: "bold",
-            color: "#FFFFFF",
+            color: "#ffffff",
             textShadow: "1px 1px 4px rgba(0,0,0,0.6)",
+            marginTop: "8px",
           }}
-        >
-          PotherPanchali.AI
-        </span>
+        ></span>
       </div>
 
       <div>
