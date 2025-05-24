@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { db } from '@/service/firebaseConfig';
-import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { db } from "@/service/firebaseConfig";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const MyTrips = () => {
   const navigate = useNavigate();
@@ -11,7 +18,7 @@ const MyTrips = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
         if (!user?.email) {
           setTrips([]);
           setLoading(false);
@@ -19,14 +26,14 @@ const MyTrips = () => {
         }
 
         const tripsQuery = query(
-          collection(db, 'AItrips'),
-          where('userEmail', '==', user.email)
+          collection(db, "AItrips"),
+          where("userEmail", "==", user.email)
         );
         const snapshot = await getDocs(tripsQuery);
-        const tripsData = snapshot.docs.map(d => ({
+        const tripsData = snapshot.docs.map((d) => ({
           id: d.id,
           ...d.data(),
-          createdAt: d.data().createdAt || d.data().timestamp || Date.now()
+          createdAt: d.data().createdAt || d.data().timestamp || Date.now(),
         }));
 
         const sortedTrips = tripsData.sort((a, b) => {
@@ -40,7 +47,7 @@ const MyTrips = () => {
 
         setTrips(sortedTrips);
       } catch (error) {
-        console.error('Error fetching trips:', error);
+        console.error("Error fetching trips:", error);
       } finally {
         setLoading(false);
       }
@@ -49,12 +56,12 @@ const MyTrips = () => {
   }, []);
 
   const handleDelete = async (tripId) => {
-    if (!window.confirm('Are you sure you want to delete this trip?')) return;
+    if (!window.confirm("Are you sure you want to delete this trip?")) return;
     try {
-      await deleteDoc(doc(db, 'AItrips', tripId));
-      setTrips(prev => prev.filter(t => t.id !== tripId));
+      await deleteDoc(doc(db, "AItrips", tripId));
+      setTrips((prev) => prev.filter((t) => t.id !== tripId));
     } catch (error) {
-      console.error('Error deleting trip:', error);
+      console.error("Error deleting trip:", error);
     }
   };
 
@@ -64,10 +71,18 @@ const MyTrips = () => {
     return Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
   };
 
-  if (loading) return <p className="text-center mt-10">Loading trips...</p>;
+  if (loading)
+    return (
+      <p className="text-center mt-10" style={{ fontFamily: "Cinzel" }}>
+        Loading trips...
+      </p>
+    );
 
   return (
-    <div className="min-h-screen pt-20 bg-[url('/backgrounds/my-trip-bg.png')] bg-cover bg-center p-6 flex flex-col items-center">
+    <div
+      className="min-h-screen pt-20 bg-[url('/backgrounds/my-trip-bg.png')] bg-cover bg-center p-6 flex flex-col items-center"
+      style={{ fontFamily: "Cinzel" }}
+    >
       <h1 className="text-3xl font-bold mb-6 text-black">My Trips</h1>
 
       {trips.length === 0 ? (
@@ -87,9 +102,10 @@ const MyTrips = () => {
               <div
                 key={trip.id}
                 className="relative group bg-white/80 hover:bg-white rounded-lg shadow-lg p-4 cursor-pointer transition"
+                style={{ fontFamily: "Cinzel" }}
                 onClick={() => navigate(`/viewTrip/${trip.id}`)}
               >
-                {/* Delete icon for every trip */}
+                {/* Delete icon */}
                 <div className="absolute top-2 right-2 z-20 transition-all">
                   <button
                     className="text-lg p-1 focus:outline-none"
@@ -97,6 +113,7 @@ const MyTrips = () => {
                       e.stopPropagation();
                       handleDelete(trip.id);
                     }}
+                    style={{ fontFamily: "Cinzel" }}
                   >
                     🗑️
                   </button>
@@ -109,14 +126,13 @@ const MyTrips = () => {
                 <p className="text-gray-700">
                   {days} {days === 1 ? "Day" : "Days"} trip with{" "}
                   <span className="font-medium">{Budget}</span> budget for{" "}
-                  <span className="font-medium">{NoOfPersons}</span> people
+                  <span className="font-medium">{NoOfPersons}</span> 
                 </p>
               </div>
             );
           })}
         </div>
       )}
-
       <button
         onClick={() => navigate("/")}
         className="fixed bottom-5 right-5 bg-black text-white px-4 py-2 rounded-full shadow-lg hover:bg-gray-800"
