@@ -9,7 +9,7 @@ export const SelectBudgetOptions = [
     {
         id: 2,
         icon: "👛",
-        title: "Shaharer Goli",
+        title: "Shohorer Goli",
         desc: "A balanced exploration",
         name: "moderate"
     },
