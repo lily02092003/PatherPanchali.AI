@@ -7,7 +7,7 @@ import { GetPlaceDetails } from "@/service/GlobalApi";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { sendChatMessage } from "@/service/GeminiChatService";
 import { useRef } from "react";
-import fetchDistanceMatrix from "@/service/Djikstra";
+import fetchDistanceMatrix from "@/service/TSP";
 
 const PHOTO_REF_URL =
   "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=445&maxWidthPx=640&key=" +
