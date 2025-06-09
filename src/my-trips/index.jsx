@@ -126,7 +126,16 @@ const MyTrips = () => {
                 <p className="text-gray-700">
                   {days} {days === 1 ? "Day" : "Days"} trip with{" "}
                   <span className="font-medium">{Budget}</span> budget for{" "}
-                  <span className="font-medium">{NoOfPersons}</span> 
+                  <span className="font-medium"></span> 
+                  {NoOfPersons === "1 Person"
+                    ? "Solo Trip"
+                    : NoOfPersons === "2 People"
+                    ? "Couple's Trip"
+                    : NoOfPersons === "3 to 5 People"
+                    ? "Family Trip"
+                    : NoOfPersons === "5 to 10 People"
+                    ? "Friends Trip"
+                    : "Group Trip"}
                 </p>
               </div>
             );
