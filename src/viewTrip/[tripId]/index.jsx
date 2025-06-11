@@ -8,6 +8,8 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { sendChatMessage } from "@/service/GeminiChatService";
 import { useRef } from "react";
 import fetchDistanceMatrix from "@/service/TSP";
+import ReactMarkdown from "react-markdown";
+import { motion } from "framer-motion";
 
 const PHOTO_REF_URL =
   "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=445&maxWidthPx=640&key=" +
@@ -765,26 +767,60 @@ function ViewTrip() {
 
                 {/* Messages Box */}
                 <div
-                  className="flex-1 overflow-y-auto bg-transparent bg-opacity-80 border border-transparent rounded p-2 space-y-2"
-                  style={{ fontFamily: "Edmund" }}
+                  className="flex-1 overflow-y-auto px-2 py-3 space-y-4"
+                  style={{ maxHeight: "80vh", fontFamily: "Edmund" }}
                 >
                   {messages.length === 0 && (
-                    <p className="text-center font-semibold text-lg">
+                    <p className="text-center font-semibold text-lg text-black">
                       Hi! I am Durga! Here to help you!
                     </p>
                   )}
-                  {messages.map((msg, index) => (
-                    <div
-                      key={index}
-                      className={`p-2 rounded-md max-w-[80%] ${
-                        msg.role === "user"
-                          ? "bg-gray-200 self-end text-right ml-auto"
-                          : "bg-blue-100 self-start text-left mr-auto"
-                      }`}
+
+                  {messages.map((msg, index) => {
+                    const isUser = msg.role === "user";
+
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className={`flex w-full mb-2 ${
+                          isUser ? "justify-end" : "justify-start"
+                        }`}
+                      >
+                        <div
+                          className={`relative max-w-[75%] px-4 py-3 rounded-lg shadow-md text-sm ${
+                            isUser
+                              ? "bg-amber-100 text-black rounded-br-none"
+                              : "bg-white text-black rounded-bl-none"
+                          }`}
+                        >
+                          <div
+                            className="prose prose-sm max-w-none text-left"
+                            style={{ fontFamily: "Edmund" }}
+                          >
+                            <ReactMarkdown>{msg.text}</ReactMarkdown>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+
+                  {/* ✨ Typing indicator */}
+                  {loading && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex justify-start"
                     >
-                      {msg.text}
-                    </div>
-                  ))}
+                      <div className="bg-white text-black px-4 py-2 rounded-lg shadow-md text-sm italic max-w-[75%]">
+                        ✨ Durga is thinking...
+                      </div>
+                    </motion.div>
+                  )}
+
                   <div ref={bottomRef} />
                 </div>
 
