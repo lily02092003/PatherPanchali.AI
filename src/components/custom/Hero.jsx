@@ -15,9 +15,9 @@ const locations = [
 ];
 
 function Hero() {
-  const [active, setActive] = useState(null);
+  
   const [flipped, setFlipped] = useState(false);
-  const handleClick = (id) => setActive(active === id ? null : id);
+  
   const toggleFlip = () => setFlipped(!flipped);
 
   return (
@@ -25,12 +25,14 @@ function Hero() {
       {/* Hero Section */}
       <section
         style={{
-          background: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url("/backgrounds/B.jpeg")`,
-          backgroundSize: "cover",
+          background: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("/backgrounds/B.jpeg")`,
+          backgroundSize: "100% 100%", // ✅ Stretches image to fill entire container
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat", // ✅ Prevents any repeat effect
           color: "white",
           padding: "4rem 2rem",
           minHeight: "100vh",
+          width: "100%", // ✅ Makes sure it spans horizontally
           fontFamily: "'EB Garamond', serif",
           position: "relative",
           display: "flex",
@@ -49,16 +51,51 @@ function Hero() {
           }}
         >
           {/* Welcome Section */}
-          <div style={{ flex: "1 1 60%", marginTop: "7rem", textAlign: "center" }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "4.5rem", fontWeight: "800", margin: 0, color: "#FFD700", textShadow: "2px 2px 10px rgba(0,0,0,0.7)" }}>
-              Welcome To <br /> PotherPanchali.AI !
-            </h1>
-            <p style={{ marginTop: "1.2rem", fontFamily: "'EB Garamond', serif", fontSize: "1.25rem", fontWeight: "600", lineHeight: 1.9, maxWidth: "700px", marginInline: "auto", textShadow: "1px 1px 5px rgba(0,0,0,0.6)", color: "#f8f8f8" }}>
-              Like <em>Apu’s</em> journey in <em>Pother Panchali</em>, discover the rich tapestry of local cultures and traditions.
-            </p>
+          <div
+            style={{ flex: "1 1 60%", marginTop: "7rem", textAlign: "center" }}
+          >
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+              className="text-7xl font-extrabold text-center leading-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              <span className="text-[#FFD700] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+                Welcome To
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent drop-shadow-xl">
+                PotherPanchali.AI !
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              style={{
+                marginTop: "1.2rem",
+                fontFamily: "'EB Garamond', serif",
+                fontSize: "1.25rem",
+                fontWeight: "600",
+                lineHeight: 1.9,
+                maxWidth: "700px",
+                marginInline: "auto",
+                textShadow: "1px 1px 5px rgba(0,0,0,0.6)",
+                color: "#f8f8f8",
+              }}
+            >
+              Like <em>Apu’s</em> journey in <em>Pother Panchali</em>, discover
+              the rich tapestry of local cultures and traditions.
+            </motion.p>
+
             <div style={{ marginTop: "2rem" }}>
               <Link to="/create_trips">
-                <button style={{ backgroundColor: "#B8860B", color: "#fff", border: "none", padding: "0.8rem 2rem", borderRadius: "10px", fontWeight: "bold", fontSize: "1rem", cursor: "pointer", boxShadow: "0 4px 10px rgba(0,0,0,0.3)", fontFamily: "'Cinzel', serif" }}>
+                <button
+                  className="bg-yellow-700 hover:bg-yellow-600 text-white font-bold cursor-pointer text-lg px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-transform duration-200 transform hover:scale-105"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
                   BEGIN
                 </button>
               </Link>
@@ -107,7 +144,9 @@ function Hero() {
                   flexDirection: "column",
                 }}
               >
-                <div style={{ position: "relative", width: "100%", flexGrow: 1 }}>
+                <div
+                  style={{ position: "relative", width: "100%", flexGrow: 1 }}
+                >
                   <img
                     src="/backgrounds/aboutus.jpeg"
                     alt="About Us"
@@ -168,7 +207,8 @@ function Hero() {
                     textShadow: "1px 1px 4px rgba(0,0,0,0.6)",
                   }}
                 >
-                  Your AI-powered travel planner, crafting personalized journeys and guiding you through diverse paths of exploration.
+                  Your AI-powered travel planner, crafting personalized journeys
+                  and guiding you through diverse paths of exploration.
                 </div>
               </div>
             </motion.div>
@@ -207,63 +247,21 @@ function Hero() {
             {categories.map((cat) => (
               <div
                 key={cat.id}
-                onClick={() => handleClick(cat.id)}
-                style={{
-                  width: "280px",
-                  position: "relative",
-                  cursor: "pointer",
-                  transition: "transform 0.3s",
-                  transform: active === cat.id ? "translateY(-10px)" : "none",
-                }}
+                className="relative w-[280px] cursor-pointer group transition-transform duration-300 hover:-translate-y-2"
               >
                 <img
                   src={cat.img}
                   alt={cat.label}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                    opacity: 0.85,
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-                  }}
+                  className="w-full h-[200px] object-cover rounded-lg opacity-85 shadow-lg"
                 />
-                <p
-                  style={{
-                    marginTop: "0.5rem",
-                    fontWeight: "bold",
-                    fontSize: "1.1rem",
-                    backgroundColor: "rgba(107, 74, 45, 0.75)",
-                    padding: "0.3rem",
-                    borderRadius: "6px",
-                    color: "#fff",
-                    fontFamily: "'Cinzel', serif",
-                  }}
-                >
+                <p className="mt-2 font-bold text-lg bg-[rgba(107,74,45,0.75)] text-white rounded px-2 py-1 font-[Cinzel] text-center">
                   {cat.label}
                 </p>
-                {active === cat.id && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#fff",
-                      fontSize: "1rem",
-                      padding: "1rem",
-                      textAlign: "center",
-                      backgroundColor: "rgba(107, 74, 45, 0.7)",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    {cat.text}
-                  </div>
-                )}
+
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-[rgba(107,74,45,0.75)] text-white flex items-center justify-center text-center px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-md ">{cat.text}</span>
+                </div>
               </div>
             ))}
           </div>

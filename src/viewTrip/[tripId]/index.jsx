@@ -9,6 +9,7 @@ import { sendChatMessage } from "@/service/GeminiChatService";
 import { useRef } from "react";
 import fetchDistanceMatrix from "@/service/TSP";
 import ReactMarkdown from "react-markdown";
+import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 
 const PHOTO_REF_URL =
@@ -245,6 +246,7 @@ function ViewTrip() {
         },
       ],
     }));
+    toast.success("Activity added!");
   };
 
   const handleLocationChange = (date, index, value) => {
@@ -269,6 +271,7 @@ function ViewTrip() {
       updated.splice(index, 1); // ← remove the item completely
       return { ...prev, [date]: updated };
     });
+    toast.success("Activity deleted!");
   };
 
   const handleSaveChanges = async () => {
@@ -348,7 +351,7 @@ function ViewTrip() {
         <h2 className="text-3xl font-semibold mb-4 text-black">
           Day-wise Itinerary
         </h2>
-
+        
         {itineraryByDate ? (
           Object.keys(itineraryByDate)
             .sort((a, b) => new Date(a) - new Date(b))
@@ -368,7 +371,17 @@ function ViewTrip() {
                         DAY {index + 1}: {formatDate(date)}
                       </h3>
                     </div>
-                    <div className="bg-yellow-300 text-black font-semibold px-4 py-2 rounded shadow-md flex items-center space-x-2 text-lg">
+                    <div
+                      className={`${
+                        dayWeather?.condition?.toLowerCase().includes("rain")
+                          ? "bg-blue-300 text-black"
+                          : dayWeather?.condition
+                              ?.toLowerCase()
+                              .includes("snow")
+                          ? "bg-white text-black"
+                          : "bg-yellow-300 text-black"
+                      } font-semibold px-4 py-2 rounded shadow-md flex items-center space-x-2 text-lg`}
+                    >
                       <span className="text-xl">{emoji}</span>
                       <span>{dayWeather?.condition}</span>
                       <span>{temp}</span>
@@ -387,7 +400,7 @@ function ViewTrip() {
                           </div>
                         );
                       }
-
+                      
                       const hasFullDetails =
                         act.name &&
                         act.place_image_url &&
@@ -397,27 +410,33 @@ function ViewTrip() {
                         act.location;
 
                       return (
-                        <div
+                        <motion.div
                           key={idx}
-                          className="relative pt-12 p-4 bg-white/65 rounded-md border border-black shadow text-black"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: idx * 0.05 }}
+                          className="relative pt-12 p-4 bg-white/65 rounded-md border border-black shadow hover:shadow-xl transition duration-300 transform hover:-translate-y-1 text-black"
                         >
                           {/* controls */}
-                          <div className="absolute top-2 right-2 z-10 flex gap-2 text-2xl">
+                          <div className="absolute top-2  right-2 z-10 flex gap-2 text-2xl">
                             <button
                               onClick={() => handleMoveActivity(date, idx, -1)}
                               title="Move Up"
+                              className="cursor-pointer hover:scale-110 transition-transform"
                             >
                               ⬆️
                             </button>
                             <button
                               onClick={() => handleMoveActivity(date, idx, 1)}
                               title="Move Down"
+                              className="cursor-pointer hover:scale-110 transition-transform"
                             >
                               ⬇️
                             </button>
                             <button
                               onClick={() => handleDeleteActivity(date, idx)}
                               title="Delete"
+                              className="cursor-pointer hover:scale-110 transition-transform"
                             >
                               🗑️
                             </button>
@@ -601,7 +620,7 @@ function ViewTrip() {
                               </div>
                             )}
                           </div>
-                        </div>
+                        </motion.div>
                       );
                     })}
                   </div>

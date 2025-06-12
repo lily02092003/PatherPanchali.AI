@@ -79,7 +79,7 @@ function Header() {
             <a href="/">
               <Button
                 variant="outline"
-                className="rounded-full bg-[#B8860B] text-white hover:bg-[#B8860B] border-none"
+                className="rounded-full bg-[#B8860B] text-white cursor-pointer hover:bg-yellow-500 hover:text-black transition-all duration-300 border-none"
                 style={{ fontFamily: "Edmund, serif" }}
               >
                 Home
@@ -88,7 +88,7 @@ function Header() {
             <a href="/my-trips">
               <Button
                 variant="outline"
-                className="rounded-full bg-[#B8860B] text-white hover:bg-[#B8860B] border-none"
+                className="rounded-full bg-[#B8860B] text-white cursor-pointer hover:bg-yellow-500 hover:text-black transition-all duration-300 border-none"
                 style={{ fontFamily: "Edmund, serif" }}
               >
                 My Trips

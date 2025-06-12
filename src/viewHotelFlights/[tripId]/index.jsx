@@ -167,31 +167,77 @@ function ViewHotelsFlights() {
         backgroundAttachment: "fixed",
       }}
     >
-      <h2 className="text-5xl font-extrabold text-center uppercase tracking-wider mb-8"
-        style={{ color: "#f7dec0", fontFamily: "Georgia, serif" }}>HOTELS AND FLIGHTS</h2>
+      <h2
+        className="text-5xl font-extrabold text-center uppercase tracking-wider mb-8"
+        style={{ color: "#f7dec0", fontFamily: "Georgia, serif" }}
+      >
+        HOTELS AND FLIGHTS
+      </h2>
 
       {tripData ? (
         <>
           {/* Hotel List */}
-          <div className="p-8 rounded-lg shadow-lg mt-20" style={{ fontFamily: "Georgia, serif" }}>
+          <div
+            className="p-8 rounded-lg shadow-lg mt-20 shadow-md hover:shadow-xl transition duration-300 p-5"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
             <div className="text-center mb-8">
-              <div className="inline-block px-6 py-2 rounded" style={{ backgroundColor: "#DEC3A9" }}>
-                <h2 className="text-4xl font-bold uppercase" style={{ color: "#9b4f2d" }}>Recommended Hotels</h2>
+              <div
+                className="inline-block px-6 py-2 rounded"
+                style={{ backgroundColor: "#DEC3A9" }}
+              >
+                <h2
+                  className="text-4xl font-bold uppercase"
+                  style={{ color: "#9b4f2d" }}
+                >
+                  Recommended Hotels
+                </h2>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {hotels.map((hotel, index) => (
-                <div key={index} className="rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105"
-                  style={{ backgroundColor: "rgba(255, 251, 248, 0.6)", border: "2px solid #dda37a" }}>
-                  <img src={hotelPhotos[hotel.name]} alt={hotel.name} className="w-full h-56 object-cover" />
+                <div
+                  key={index}
+                  className="rounded-xl overflow-hidden shadow-lg transition transform hover:scale-105"
+                  style={{
+                    backgroundColor: "rgba(255, 251, 248, 0.6)",
+                    border: "2px solid #dda37a",
+                  }}
+                >
+                  <img
+                    src={hotelPhotos[hotel.name]}
+                    alt={hotel.name}
+                    className="w-full h-56 object-cover"
+                  />
                   <div className="p-4">
-                    <h3 className="text-xl font-bold mb-2" style={{ color: "#9b4f2d" }}>{hotel.name}</h3>
-                    <p className="text-sm mb-2 text-gray-800">{hotel.description}</p>
-                    <p className="text-sm mb-2 text-gray-700">📍 {hotel.address}</p>
-                    <p className="text-sm text-gray-700">⭐ {hotel.rating} | 💰 {currencySymbol}{hotel.price}</p>
+                    <h3
+                      className="text-xl font-bold mb-2"
+                      style={{ color: "#9b4f2d" }}
+                    >
+                      {hotel.name}
+                    </h3>
+                    <p className="text-sm mb-2 text-gray-800">
+                      {hotel.description}
+                    </p>
+                    <p className="text-sm mb-2 text-gray-700">
+                      📍 {hotel.address}
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      {"⭐".repeat(Math.floor(hotel.rating))} ({hotel.rating}) |
+                      💰 {currencySymbol}
+                      {hotel.price}
+                    </p>
                     <div className="mt-4">
-                      <a href={`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(hotel.name)}`} target="_blank" rel="noopener noreferrer">
-                        <button className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300">Book Now</button>
+                      <a
+                        href={`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(
+                          hotel.name
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300">
+                          Book Now
+                        </button>
                       </a>
                     </div>
                   </div>
@@ -203,10 +249,18 @@ function ViewHotelsFlights() {
           {/* Flights */}
           {["onward", "return"].map((type) => {
             const isOnward = type === "onward";
-            const showFlights = isOnward ? showOnwardFlights : showReturnFlights;
-            const setShowFlights = isOnward ? setShowOnwardFlights : setShowReturnFlights;
-            const flightFilter = isOnward ? onwardFlightFilter : returnFlightFilter;
-            const setFlightFilter = isOnward ? setOnwardFlightFilter : setReturnFlightFilter;
+            const showFlights = isOnward
+              ? showOnwardFlights
+              : showReturnFlights;
+            const setShowFlights = isOnward
+              ? setShowOnwardFlights
+              : setShowReturnFlights;
+            const flightFilter = isOnward
+              ? onwardFlightFilter
+              : returnFlightFilter;
+            const setFlightFilter = isOnward
+              ? setOnwardFlightFilter
+              : setReturnFlightFilter;
             const flightList = filterFlights(flights?.[type], flightFilter);
 
             return (
@@ -292,7 +346,6 @@ function ViewHotelsFlights() {
                             <strong>Arrival:</strong>{" "}
                             {formatDateTime(flight.Arrival)}
                           </p>
-      
                         </div>
                       ))}
                     </div>
@@ -309,23 +362,38 @@ function ViewHotelsFlights() {
 
           {/* Booking Buttons */}
           <div className="mt-12 flex justify-end gap-6">
-            {(hasAnyDirectFlights(flights?.onward) || hasAnyDirectFlights(flights?.return)) ? (
-              <a href="https://www.booking.com/flights/index.html" target="_blank" rel="noopener noreferrer">
-                <button className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300"
-                  style={{ fontFamily: "Cinzel" }}>
+            {hasAnyDirectFlights(flights?.onward) ||
+            hasAnyDirectFlights(flights?.return) ? (
+              <a
+                href="https://www.booking.com/flights/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300"
+                  style={{ fontFamily: "Cinzel" }}
+                >
                   Book Flights on Booking.com
                 </button>
               </a>
             ) : (
-              <a href="https://www.ixigo.com/flights" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.ixigo.com/flights"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300">
                   Find Connecting Flights on Ixigo
                 </button>
               </a>
             )}
             <Link to={`/viewTrip/${tripId}`}>
-              <button className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300"
-                style={{ fontFamily: "Cinzel" }}>Next</button>
+              <button
+                className="bg-[#9b4f2d] hover:bg-[#823e22] text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-300"
+                style={{ fontFamily: "Cinzel" }}
+              >
+                Next
+              </button>
             </Link>
           </div>
         </>

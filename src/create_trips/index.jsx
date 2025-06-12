@@ -262,22 +262,33 @@ function CreateTrip() {
   return (
     <div className="min-h-screen bg-[url('/backgrounds/second.png')] bg-cover bg-center bg-no-repeat bg-fixed text-white px-4 flex flex-col justify-center items-center">
       {/* Centered Heading and Subtext */}
-      
-      <div className="text-center max-w-3xl mb-10 mt-15">
 
-        <h2 className="font-bold text-3xl" style={{fontFamily: "'EB Garamond', serif"}}>Generate your perfect Getaway</h2>
-        <p className="mt-3 text-xl text-gray-200" style={{fontFamily: "'Cinzel', serif"}}>
-          Provide some basic details and let PotherPanchali weave a
-          travel itinerary, personalized just for you!
+      <div className="text-center max-w-3xl mb-10 mt-15">
+        <h2
+          className="font-bold text-3xl"
+          style={{ fontFamily: "'EB Garamond', serif" }}
+        >
+          Generate your perfect Getaway
+        </h2>
+        <p
+          className="mt-3 text-xl text-gray-200"
+          style={{ fontFamily: "'Cinzel', serif" }}
+        >
+          Provide some basic details and let PotherPanchali weave a travel
+          itinerary, personalized just for you!
         </p>
       </div>
 
+      {/* Current Location Field */}
 
-        {/* Current Location Field */}
-
-        <div className="bg-black/35 rounded-2xl p-5 max-w-2xl w-full ml-auto mb-20">
+      <div className="bg-black/35 rounded-2xl p-5 max-w-2xl w-full ml-auto mb-20">
         <div className="mt-10">
-          <h2 className="text-xl my-3 font-medium" style={{fontFamily: "'EB Garamond', serif"}}>Select Current Location</h2>
+          <h2
+            className="text-xl my-3 font-medium"
+            style={{ fontFamily: "'EB Garamond', serif" }}
+          >
+            Select Current Location
+          </h2>
           <input
             type="text"
             placeholder="Enter your current location..."
@@ -290,8 +301,14 @@ function CreateTrip() {
             }}
           />
           {predictions.currentLocation.length > 0 && (
-            <ul className="border border-white rounded-md mt-2 w-full" style={{fontFamily: "'Cinzel', serif", backgroundColor: 'rgba(193, 179, 129, 0.5)' }} >
-            {predictions.currentLocation.map((place, index) => (
+            <ul
+              className="border border-white rounded-md mt-2 w-full"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                backgroundColor: "rgba(193, 179, 129, 0.5)",
+              }}
+            >
+              {predictions.currentLocation.map((place, index) => (
                 <li
                   key={index}
                   className="p-2 border-b border-white hover:bg-gray-200/30 cursor-pointer"
@@ -313,7 +330,10 @@ function CreateTrip() {
 
         {/* Destination Field */}
         <div className="mt-10">
-          <h2 className="text-xl my-3 font-medium"style={{fontFamily: "'EB Garamond', serif"}}>
+          <h2
+            className="text-xl my-3 font-medium"
+            style={{ fontFamily: "'EB Garamond', serif" }}
+          >
             Select Preferred Destination
           </h2>
           <input
@@ -328,11 +348,18 @@ function CreateTrip() {
             }}
           />
           {predictions.destination.length > 0 && (
-            <ul className="border border-white rounded-md mt-2 w-full" style={{fontFamily: "'Cinzel', serif",backgroundColor: 'rgba(193, 179, 129, 0.5)' }} >
+            <ul
+              className="border border-white rounded-md mt-2 w-full"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                backgroundColor: "rgba(193, 179, 129, 0.5)",
+              }}
+            >
               {predictions.destination.map((place, index) => (
                 <li
                   key={index}
-                  className="p-2 border-b border-white hover:bg-gray-200/30 cursor-pointer"style={{fontFamily: "'Cinzel', serif"}}
+                  className="p-2 border-b border-white hover:bg-gray-200/30 cursor-pointer"
+                  style={{ fontFamily: "'Cinzel', serif" }}
                   onClick={() => {
                     handleInputChange("destination", place.text.text);
                     fetchPlaceDetails(place.placeId, "destination");
@@ -349,19 +376,31 @@ function CreateTrip() {
         <div className="flex justify-center items-start gap-6 mt-10 mb-10">
           {/* Departure Date */}
           <div>
-            <h2 className="text-xl my-3 font-medium" style={{fontFamily: "'EB Garamond', serif"}}>Select Departure Date</h2>
+            <h2
+              className="text-xl my-3 font-medium"
+              style={{ fontFamily: "'EB Garamond', serif" }}
+            >
+              Select Departure Date
+            </h2>
             <input
               type="date"
               className="p-4 rounded-lg cursor-pointer hover:shadow-lg bg-[rgba(193,179,129,0.3)]"
               value={formData.departureDate}
-              onChange={(e) => handleInputChange("departureDate", e.target.value)}
+              onChange={(e) =>
+                handleInputChange("departureDate", e.target.value)
+              }
               min={today}
             />
           </div>
 
           {/* Arrival Date */}
           <div>
-            <h2 className="text-xl my-3 font-medium" style={{fontFamily: "'EB Garamond', serif"}}>Select Arrival Date</h2>
+            <h2
+              className="text-xl my-3 font-medium"
+              style={{ fontFamily: "'EB Garamond', serif" }}
+            >
+              Select Arrival Date
+            </h2>
             <input
               type="date"
               className="p-4 rounded-lg cursor-pointer hover:shadow-lg bg-[rgba(193,179,129,0.3)]"
@@ -372,8 +411,10 @@ function CreateTrip() {
           </div>
         </div>
 
-
-        <h2 className="text-xl my-3 font-medium" style={{ fontFamily: "'EB Garamond', serif" }}>
+        <h2
+          className="text-xl my-3 font-medium"
+          style={{ fontFamily: "'EB Garamond', serif" }}
+        >
           Budget of the trip?
         </h2>
         <div className="grid grid-cols-3 gap-5 mt-5">
@@ -381,20 +422,40 @@ function CreateTrip() {
             <div
               key={index}
               onClick={() => handleInputChange("Budget", item.name)}
-              className={`p-4 rounded-lg cursor-pointer hover:shadow-lg 
-                ${formData?.Budget === item.name
-                  ? "bg-[#c2b280]/75 border-2 border-white shadow-lg"
-                  : "bg-[rgba(193,179,129,0.3)]"
-                }`}
+              className={`p-4 rounded-lg cursor-pointer transition-transform duration-300 
+                ${
+                  formData?.Budget === item.name
+                    ? "bg-[#c2b280]/75 border-2 border-white shadow-lg"
+                    : "bg-[rgba(193,179,129,0.3)]"
+                } 
+                hover:scale-105 hover:bg-white-600/40 hover:ring-2 hover:ring-white`}
             >
-              <h2 className="text-4xl" style={{ fontFamily: "'Cinzel', serif" }}>{item.icon}</h2>
-              <h2 className="font-bold text-lg" style={{ fontFamily: "'Cinzel', serif" }}>{item.title}</h2>
-              <h2 className="text-sm text-black-500" style={{ fontFamily: "'Cinzel', serif" }}>{item.desc}</h2>
+              <h2
+                className="text-4xl"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.icon}
+              </h2>
+              <h2
+                className="font-bold text-lg"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.title}
+              </h2>
+              <h2
+                className="text-sm text-black-500"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.desc}
+              </h2>
             </div>
           ))}
         </div>
 
-        <h2 className="text-xl my-3 font-medium mt-10" style={{ fontFamily: "'EB Garamond', serif" }}>
+        <h2
+          className="text-xl my-3 font-medium mt-10"
+          style={{ fontFamily: "'EB Garamond', serif" }}
+        >
           Number of people
         </h2>
         <div className="grid grid-cols-3 gap-5 mt-5">
@@ -402,25 +463,41 @@ function CreateTrip() {
             <div
               key={index}
               onClick={() => handleInputChange("NoOfPersons", item.no)}
-              className={`p-4 rounded-lg cursor-pointer hover:shadow-lg 
-                ${formData?.NoOfPersons === item.no
-                  ? "bg-[#c2b280]/75 border-2 border-white shadow-lg"
-                  : "bg-[rgba(193,179,129,0.3)]"
-                }`}
+              className={`p-4 rounded-lg cursor-pointer transition-transform duration-300 
+                ${
+                  formData?.NoOfPersons === item.no
+                    ? "bg-[#c2b280]/75 border-2 border-white shadow-lg"
+                    : "bg-[rgba(193,179,129,0.3)]"
+                } 
+                hover:scale-105 hover:bg-white-600/40 hover:ring-2 hover:ring-white`}
             >
-              <h2 className="text-4xl" style={{ fontFamily: "'Cinzel', serif" }}>{item.icon}</h2>
-              <h2 className="font-bold text-lg" style={{ fontFamily: "'Cinzel', serif" }}>{item.title}</h2>
-              <h2 className="text-sm text-black-500" style={{ fontFamily: "'Cinzel', serif" }}>{item.desc}</h2>
+              <h2
+                className="text-4xl"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.icon}
+              </h2>
+              <h2
+                className="font-bold text-lg"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.title}
+              </h2>
+              <h2
+                className="text-sm text-black-500"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {item.desc}
+              </h2>
             </div>
           ))}
         </div>
-
 
         <div className="my-10 justify-end">
           <Button
             disabled={loading}
             onClick={onGenerateTrip}
-            className="bg-[#c1b381]/60 text-white hover:bg-black transition-colors duration-300"
+            className="bg-[#c1b381]/60 text-white hover:bg-black cursor-pointer transition-colors duration-300"
             style={{ fontFamily: "'EB Garamond', serif" }}
           >
             {loading ? (
@@ -430,7 +507,6 @@ function CreateTrip() {
             )}
           </Button>
         </div>
-
 
         <Dialog open={openDailog}>
           <DialogContent>
@@ -461,8 +537,9 @@ function CreateTrip() {
         <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
           <Button
             onClick={() => navigate("/")}
-            className="bg-[#c1b381]/80 text-white hover:bg-black transition-colors duration-300" style={{ fontFamily: "'EB Garamond', serif" }}
-            >
+            className="bg-[#c1b381]/80 text-white cursor-pointer hover:bg-black transition-colors duration-300"
+            style={{ fontFamily: "'EB Garamond', serif" }}
+          >
             Go Back
           </Button>
         </div>

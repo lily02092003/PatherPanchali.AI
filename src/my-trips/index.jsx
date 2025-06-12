@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "@/service/firebaseConfig";
+import toast from "react-hot-toast";
 import {
   collection,
   getDocs,
@@ -63,6 +64,7 @@ const MyTrips = () => {
     } catch (error) {
       console.error("Error deleting trip:", error);
     }
+    toast.success("Trip Deleted!")
   };
 
   const calculateDays = (start, end) => {
@@ -73,9 +75,14 @@ const MyTrips = () => {
 
   if (loading)
     return (
-      <p className="text-center mt-10" style={{ fontFamily: "Cinzel" }}>
-        Loading trips...
-      </p>
+      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-white/70 animate-pulse rounded-lg p-4 h-[180px]"
+          ></div>
+        ))}
+      </div>
     );
 
   return (
@@ -86,7 +93,16 @@ const MyTrips = () => {
       <h1 className="text-3xl font-bold mb-6 text-black">My Trips</h1>
 
       {trips.length === 0 ? (
-        <p>No trips found. Create a new trip to get started.</p>
+        <div className="text-center mt-10 bg-white/80 p-6 rounded-lg shadow-md max-w-md">
+          <h2 className="text-xl font-semibold mb-2">No Trips Found</h2>
+          <p className="mb-4">Create a new trip to start your journey!</p>
+          <button
+            onClick={() => navigate("/create_trips")}
+            className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition"
+          >
+            Create New Trip
+          </button>
+        </div>
       ) : (
         <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {trips.map((trip) => {
@@ -126,7 +142,7 @@ const MyTrips = () => {
                 <p className="text-gray-700">
                   {days} {days === 1 ? "Day" : "Days"} trip with{" "}
                   <span className="font-medium">{Budget}</span> budget for{" "}
-                  <span className="font-medium"></span> 
+                  <span className="font-medium"></span>
                   {NoOfPersons === "1 Person"
                     ? "Solo Trip"
                     : NoOfPersons === "2 People"
