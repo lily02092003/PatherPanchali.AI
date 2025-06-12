@@ -307,11 +307,12 @@ function ViewTrip() {
     try {
       const docRef = doc(db, "AItrips", tripId);
       await updateDoc(docRef, { tripData: updatedTripData });
-      alert("Changes saved successfully! ✨");
+      toast.success("Changes saved succesfully!!");
     } catch (error) {
       console.error("Error saving changes:", error);
-      alert("Failed to save changes. Please try again.");
+      toast.success("Failed to save changes. Please try again.");
     }
+    
   };
 
   const handleMoveActivity = (date, fromIndex, direction) => {
