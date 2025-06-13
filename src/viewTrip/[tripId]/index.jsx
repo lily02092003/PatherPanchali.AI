@@ -380,6 +380,10 @@ function ViewTrip() {
                               ?.toLowerCase()
                               .includes("snow")
                           ? "bg-white text-black"
+                          : dayWeather?.condition
+                              ?.toLowerCase()
+                              .includes("cloudy")
+                          ? "bg-gray-300 text-black"
                           : "bg-yellow-300 text-black"
                       } font-semibold px-4 py-2 rounded shadow-md flex items-center space-x-2 text-lg`}
                     >
@@ -401,7 +405,7 @@ function ViewTrip() {
                           </div>
                         );
                       }
-                      
+
                       const hasFullDetails =
                         act.name &&
                         act.place_image_url &&
