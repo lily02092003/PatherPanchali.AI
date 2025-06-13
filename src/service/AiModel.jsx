@@ -1,297 +1,62 @@
 import {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} from "@google/generative-ai";
-
-const apiKey = import.meta.env.VITE_GOOGLE_APIKEY;
-const genAI = new GoogleGenerativeAI(apiKey);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
-});
-
-const generationConfig = {
-  temperature: 1,
-  topP: 0.95,
-  topK: 40,
-  maxOutputTokens: 8192,
-  responseModalities: [],
-  responseMimeType: "application/json",
-};
-
-export const chatSession = model.startChat({
-  generationConfig,
-  history: [
-    {
-      role: "user",
-      parts: [
+    GoogleGenerativeAI,
+    HarmCategory,
+    HarmBlockThreshold,
+  } from "@google/generative-ai";
+  
+  const apiKey = import.meta.env.VITE_GOOGLE_APIKEY;
+  const genAI = new GoogleGenerativeAI(apiKey);
+  
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash",
+  });
+  
+  const generationConfig = {
+    temperature: 1,
+    topP: 0.95,
+    topK: 40,
+    maxOutputTokens: 8192,
+    responseModalities: [
+    ],
+    responseMimeType: "application/json",
+  };
+  
+ 
+    export const chatSession = model.startChat({
+      generationConfig,
+      history: [
         {
-          text:
-            "Create an optimal trip itinerary based on the specified location, duration, budget, and number of persons. Generate Travel Plan for Location: Kolkata for no of days between 2025-03-26 and 2025-03-27 with no of People or group: 3 with Budget: cheap; give me list of hotels with hotel name, description, address, rating, price, location in map, coordinates, image url; also for the same create the itinerary for each day, suggest places, give name, details, pricing, timings, place images urls, location (coordinate or in map); Remember all have to cover in the cheap level budget. Important: give the result in JSON Format",
+          role: "user",
+          parts: [
+            {text: "Create an optimal trip itinerary based on the specified location, duration, budget, and number of persons. Generate Travel Plan for Location: Kolkata for no of days between 2025-03-26 and 2025-03-27 with no of People or group: 3 with Budget: cheap; give me list of hotels with hotel name, description, address, rating, price, location in map, coordinates, image url; also for the same create the itinerary for each day, suggest places, give name, details, pricing, timings, place images urls, location (coordinate or in map); Remember all have to cover in the cheap level budget. Important: give the result in JSON Format"},
+          ],
+        },
+        {
+          role: "model",
+          parts: [
+            {text: "```json\n{\n  \"travel_plan\": {\n    \"location\": \"Kolkata\",\n    \"duration\": \"2 days (2025-03-26 to 2025-03-27)\",\n    \"group_size\": 3,\n    \"budget\": \"cheap\",\n    \"currency\": \"INR\",\n    \"hotels\": [\n      {\n        \"name\": \"Hotel Check Inn\",\n        \"description\": \"A budget-friendly hotel offering basic amenities and comfortable rooms.\",\n        \"address\": \"5/2, Sudder Street, Kolkata, West Bengal 700016, India\",\n        \"rating\": 3,\n        \"price\": 800,\n        \"location_in_map\": \"Sudder Street, Kolkata\",\n        \"coordinates\": {\n          \"latitude\": 22.5473,\n          \"longitude\": 88.3525\n        },\n        \"image_url\": \"https://example.com/hotel_check_inn.jpg\"\n      },\n      {\n        \"name\": \"Hotel Galaxy\",\n        \"description\": \"Simple hotel with clean rooms in a central location.\",\n        \"address\": \"19/1, Marques Street, Kolkata, West Bengal 700016, India\",\n        \"rating\": 2.5,\n        \"price\": 700,\n        \"location_in_map\": \"Marques Street, Kolkata\",\n        \"coordinates\": {\n          \"latitude\": 22.5502,\n          \"longitude\": 88.3557\n        },\n        \"image_url\": \"https://example.com/hotel_galaxy.jpg\"\n      },\n      {\n        \"name\": \"Hotel Lee International\",\n        \"description\": \"Budget hotel close to the New Market area.\",\n        \"address\": \"16, Mirza Ghalib St, Esplanade, Kolkata, West Bengal 700087, India\",\n        \"rating\": 3.2,\n        \"price\": 900,\n        \"location_in_map\": \"Esplanade, Kolkata\",\n        \"coordinates\": {\n          \"latitude\": 22.5602,\n          \"longitude\": 88.3536\n        },\n        \"image_url\": \"https://example.com/hotel_lee_international.jpg\"\n      }\n    ],\n    \"itinerary\": {\n      \"2025-03-26\": [\n        {\n          \"name\": \"Victoria Memorial\",\n          \"details\": \"A grand marble building dedicated to Queen Victoria. Explore the museum showcasing historical artifacts.\",\n          \"pricing\": 30,\n          \"timings\": \"10:00 AM - 6:00 PM\",\n          \"place_image_url\": \"https://example.com/victoria_memorial.jpg\",\n          \"location\": {\n            \"map\": \"Victoria Memorial, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5448,\n              \"longitude\": 88.3426\n            }\n          }\n        },\n        {\n          \"name\": \"Indian Museum\",\n          \"details\": \"One of the oldest museums in India, housing a vast collection of artifacts, including fossils, sculptures, and ancient relics.\",\n          \"pricing\": 75,\n          \"timings\": \"10:00 AM - 5:00 PM (Closed on Mondays)\",\n          \"place_image_url\": \"https://example.com/indian_museum.jpg\",\n          \"location\": {\n            \"map\": \"Indian Museum, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5525,\n              \"longitude\": 88.3468\n            }\n          }\n        },\n        {\n          \"name\": \"New Market\",\n          \"details\": \"A bustling marketplace offering a wide variety of goods, from clothing and accessories to food and spices. Great for experiencing local culture and bargaining for deals.\",\n          \"pricing\": \"Free (shopping costs vary)\",\n          \"timings\": \"10:00 AM - 8:00 PM (Closed on Sundays)\",\n          \"place_image_url\": \"https://example.com/new_market.jpg\",\n          \"location\": {\n            \"map\": \"New Market, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5539,\n              \"longitude\": 88.3531\n            }\n          }\n        },\n        {\n          \"name\": \"Park Street Dinner\",\n          \"details\": \"Enjoy a cheap and tasty dinner at one of the many street food stalls on Park Street. Try Kathi Rolls and other local delicacies.\",\n          \"pricing\": 150,\n          \"timings\": \"Evening\",\n          \"place_image_url\": \"https://example.com/park_street_food.jpg\",\n          \"location\": {\n            \"map\": \"Park Street, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5469,\n              \"longitude\": 88.3582\n            }\n          }\n        }\n\n      ],\n      \"2025-03-27\": [\n        {\n          \"name\": \"Howrah Bridge\",\n          \"details\": \"An iconic cantilever bridge over the Hooghly River. Take a walk or ride across it to enjoy panoramic views of the city and the river.\",\n          \"pricing\": \"Free\",\n          \"timings\": \"Open 24 hours\",\n          \"place_image_url\": \"https://example.com/howrah_bridge.jpg\",\n          \"location\": {\n            \"map\": \"Howrah Bridge, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5855,\n              \"longitude\": 88.3483\n            }\n          }\n        },\n        {\n          \"name\": \"Belur Math\",\n          \"details\": \"The headquarters of the Ramakrishna Math and Mission. A serene and peaceful place with beautiful architecture.\",\n          \"pricing\": \"Free\",\n          \"timings\": \"6:30 AM - 11:30 AM, 4:00 PM - 8:30 PM\",\n          \"place_image_url\": \"https://example.com/belur_math.jpg\",\n          \"location\": {\n            \"map\": \"Belur Math, Howrah\",\n            \"coordinates\": {\n              \"latitude\": 22.6467,\n              \"longitude\": 88.3472\n            }\n          }\n        },\n        {\n          \"name\": \"Dakshineswar Kali Temple\",\n          \"details\": \"A famous Hindu temple dedicated to Goddess Kali. Explore the temple complex and witness the daily rituals.\",\n          \"pricing\": \"Free\",\n          \"timings\": \"6:00 AM - 12:30 PM, 3:30 PM - 8:30 PM\",\n          \"place_image_url\": \"https://example.com/dakshineswar_temple.jpg\",\n          \"location\": {\n            \"map\": \"Dakshineswar Kali Temple, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.6514,\n              \"longitude\": 88.3649\n            }\n          }\n        },\n         {\n          \"name\": \"Princep Ghat\",\n          \"details\": \"Enjoy the riverside view and a relaxing evening at Princep Ghat. Consider a boat ride on the Hooghly River.  You can find street food here, but be mindful of hygiene.\",\n          \"pricing\": \"Free entry, Boat ride approximately 200 INR per person.\",\n          \"timings\": \"Open all day, Boat rides usually available from afternoon till evening\",\n          \"place_image_url\": \"https://example.com/princep_ghat.jpg\",\n          \"location\": {\n            \"map\": \"Princep Ghat, Kolkata\",\n            \"coordinates\": {\n              \"latitude\": 22.5723,\n              \"longitude\": 88.3403\n            }\n          }\n        }\n      ]\n    },\n    \"notes\": [\n      \"Prices are approximate and can vary based on season and availability.\",\n      \"Local transportation (buses and auto-rickshaws) is recommended for budget travel.\",\n      \"Always negotiate prices with vendors before purchasing anything.\",\n      \"Be aware of your surroundings and take necessary precautions against petty theft.\",\n      \"Consider trying local street food, but ensure hygiene.\",\n      \"Image URLs are placeholders. Replace them with actual image URLs.\"\n    ],\n    \"estimated_budget\": {\n      \"accommodation\": 1600,\n      \"food\": 1000,\n      \"transportation\": 500,\n      \"activities\": 645,\n      \"total\": 3745\n    }\n  }\n}\n```"},
+          ],
         },
       ],
-    },
-    {
-      role: "model",
-      parts: [
-        {
-          text: JSON.stringify({
-            travel_plan: {
-              location: "Kolkata",
-              duration: "2 days (2025-03-26 to 2025-03-27)",
-              group_size: 3,
-              budget: "cheap",
-              currency: "INR",
-              hotels: [
-                {
-                  name: "Hotel Park Street",
-                  description: "A budget-friendly hotel in a central location.",
-                  address:
-                    "17, Park St, Park Street area, Kolkata, West Bengal 700016",
-                  rating: 3.5,
-                  price: 1500,
-                  location_in_map:
-                    "https://maps.app.goo.gl/48VbW1r4J2iHh9Fj6",
-                  coordinates: {
-                    latitude: 22.5465,
-                    longitude: 88.3553,
-                  },
-                  image_url: "https://example.com/hotel_parkstreet.jpg",
-                },
-                {
-                  name: "Hotel Galaxy",
-                  description:
-                    "Located near Sealdah station, offering affordable accommodation.",
-                  address: "18, Beliaghata Main Rd, Kolkata, West Bengal 700010",
-                  rating: 3.0,
-                  price: 1200,
-                  location_in_map:
-                    "https://maps.app.goo.gl/8jVwY5a3qHk4Gq2N7",
-                  coordinates: {
-                    latitude: 22.5665,
-                    longitude: 88.3786,
-                  },
-                  image_url: "https://example.com/hotel_galaxy.jpg",
-                },
-                {
-                  name: "Astoria Hotel",
-                  description:
-                    "A budget hotel in Esplanade, close to many attractions.",
-                  address: "6/2 Sudder Street, Kolkata, West Bengal 700016",
-                  rating: 3.2,
-                  price: 1300,
-                  location_in_map:
-                    "https://maps.app.goo.gl/e7d3jM6gQ3J7z9zJ6",
-                  coordinates: {
-                    latitude: 22.5445,
-                    longitude: 88.3502,
-                  },
-                  image_url: "https://example.com/astoria_hotel.jpg",
-                },
-              ],
-              itinerary: {
-                "2025-03-26": [
-                  {
-                    name:
-                      "Arrival at Netaji Subhas Chandra Bose International Airport (CCU)",
-                    details:
-                      "Arrive at CCU. Take pre-paid taxi or app-based cab (Ola/Uber) to hotel. Cost: INR 400-600. Alternatively, take Airport Bus AC 37 (INR 50 per person) to Esplanade and then a local bus/auto to the hotel. Check into Hotel.",
-                    pricing: "INR 400-600 (Taxi) or INR 150 (Bus)",
-                    timings: "Variable",
-                    place_image_url:
-                      "https://example.com/kolkata_airport.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/j8u8t9J8L6R4LqY7A",
-                      coordinates: {
-                        latitude: 22.6547,
-                        longitude: 88.4466,
-                      },
-                    },
-                  },
-                  {
-                    name: "Breakfast at Terreti Morning Market (Chinatown)",
-                    details:
-                      "Explore the Terreti Morning Market for authentic Chinese breakfast. Enjoy momos, soups, and more at incredibly low prices.",
-                    pricing: "INR 150-200 for 3",
-                    timings: "5:00 AM - 8:00 AM",
-                    place_image_url: "https://example.com/terreti_market.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/jRzG3w9G62b5Z8u97",
-                      coordinates: {
-                        latitude: 22.5741,
-                        longitude: 88.3541,
-                      },
-                    },
-                  },
-                  {
-                    name: "Victoria Memorial",
-                    details:
-                      "Explore the gardens for free, or pay to enter the museum. Admire the architecture and learn about history.",
-                    pricing: "INR 30 per person (museum entry)",
-                    timings: "10:00 AM - 5:00 PM (Museum)",
-                    place_image_url:
-                      "https://example.com/victoria_memorial.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/4q2mD5W87R4y5N6H8",
-                      coordinates: {
-                        latitude: 22.5448,
-                        longitude: 88.343,
-                      },
-                    },
-                  },
-                  {
-                    name: "Lunch",
-                    details:
-                      "Have lunch at a local restaurant around Park Street or Esplanade. Try a Bengali thali.",
-                    pricing: "INR 450-600 for 3",
-                    timings: "1:00 PM - 2:00 PM",
-                    place_image_url: "https://example.com/bengali_thali.jpg",
-                    location: {
-                      map: "",
-                      coordinates: { latitude: 0.0, longitude: 0.0 },
-                    },
-                  },
-                  {
-                    name: "Indian Museum",
-                    details:
-                      "Explore a vast collection of artifacts, sculptures, and historical exhibits.",
-                    pricing: "INR 75 per person",
-                    timings: "10:00 AM - 5:00 PM",
-                    place_image_url: "https://example.com/indian_museum.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/5i7F6z2rT5Q8f7Qj6",
-                      coordinates: {
-                        latitude: 22.5478,
-                        longitude: 88.3513,
-                      },
-                    },
-                  },
-                  {
-                    name: "Dinner",
-                    details:
-                      "Enjoy street food at New Market area. Try phuchka, rolls, and more.",
-                    pricing: "INR 300-450 for 3",
-                    timings: "7:00 PM - 9:00 PM",
-                    place_image_url:
-                      "https://example.com/kolkata_street_food.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/t88pL4V77gH2q5qW9",
-                      coordinates: {
-                        latitude: 22.5472,
-                        longitude: 88.3522,
-                      },
-                    },
-                  },
-                ],
-                "2025-03-27": [
-                  {
-                    name: "Breakfast at Local Tea Stall",
-                    details:
-                      "Start your day with a cup of chai and biscuits at a tea stall.",
-                    pricing: "INR 50-75 for 3",
-                    timings: "8:00 AM - 9:00 AM",
-                    place_image_url: "https://example.com/tea_stall.jpg",
-                    location: {
-                      map: "",
-                      coordinates: { latitude: 0.0, longitude: 0.0 },
-                    },
-                  },
-                  {
-                    name: "Howrah Bridge",
-                    details:
-                      "Take a walk along the bridge for stunning views of the Hooghly River.",
-                    pricing: "Free",
-                    timings: "Open 24 hours",
-                    place_image_url: "https://example.com/howrah_bridge.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/4M8hQ9Hw6J2i7W1C8",
-                      coordinates: {
-                        latitude: 22.5855,
-                        longitude: 88.3482,
-                      },
-                    },
-                  },
-                  {
-                    name: "Lunch",
-                    details:
-                      "Have lunch at a local dhaba near Howrah or Burrabazar.",
-                    pricing: "INR 450-600 for 3",
-                    timings: "1:00 PM - 2:00 PM",
-                    place_image_url: "https://example.com/dhaba_food.jpg",
-                    location: {
-                      map: "",
-                      coordinates: { latitude: 0.0, longitude: 0.0 },
-                    },
-                  },
-                  {
-                    name: "Kumartuli (Potters' Town)",
-                    details:
-                      "Witness the creation of clay idols. Free to visit, donation optional.",
-                    pricing: "Free (Donation optional)",
-                    timings: "9:00 AM - 6:00 PM",
-                    place_image_url: "https://example.com/kumartuli.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/gR989v8w2i4vT8b57",
-                      coordinates: {
-                        latitude: 22.5984,
-                        longitude: 88.3643,
-                      },
-                    },
-                  },
-                  {
-                    name:
-                      "Departure from Netaji Subhas Chandra Bose International Airport (CCU)",
-                    details:
-                      "Take a cab or bus to airport. Check-in for your flight.",
-                    pricing: "INR 400-600 (Taxi) or INR 150 (Bus)",
-                    timings: "Variable",
-                    place_image_url:
-                      "https://example.com/kolkata_airport.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/j8u8t9J8L6R4LqY7A",
-                      coordinates: {
-                        latitude: 22.6547,
-                        longitude: 88.4466,
-                      },
-                    },
-                  },
-                  {
-                    name: "Dinner (Airport)",
-                    details:
-                      "Grab dinner at one of the budget-friendly food options in the airport.",
-                    pricing: "INR 450 - 600",
-                    timings: "Variable",
-                    place_image_url: "https://example.com/airport_food.jpg",
-                    location: {
-                      map: "https://maps.app.goo.gl/j8u8t9J8L6R4LqY7A",
-                      coordinates: {
-                        latitude: 22.6547,
-                        longitude: 88.4466,
-                      },
-                    },
-                  },
-                ],
-              },
-              notes: [
-                "Use local buses and metro for affordable transportation (INR 10-20 per trip).",
-                "Bargain while shopping at markets like New Market and Gariahat.",
-                "Drink bottled water only to avoid stomach issues.",
-                "Be aware of your belongings in crowded areas.",
-                "Respect local customs and traditions.",
-                "Learn a few basic Bengali phrases for better interaction with locals.",
-              ],
-              estimated_budget: {
-                accommodation: 3000,
-                food: 3000,
-                transportation: 1500,
-                activities: 700,
-                total: 8200,
-              },
-            },
-          }),
-        },
-      ],
-    },
-  ],
-});
+    });
+  
+    const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+    // TODO: Following code needs to be updated for client-side apps.
+    const candidates = result.response.candidates;
+    for(let candidate_index = 0; candidate_index < candidates.length; candidate_index++) {
+      for(let part_index = 0; part_index < candidates[candidate_index].content.parts.length; part_index++) {
+        const part = candidates[candidate_index].content.parts[part_index];
+        if(part.inlineData) {
+          try {
+            const filename = `output_${candidate_index}_${part_index}.${mime.extension(part.inlineData.mimeType)}`;
+            fs.writeFileSync(filename, Buffer.from(part.inlineData.data, 'base64'));
+            console.log(`Output written to: ${filename}`);
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
+    }
+  
+  
+  
