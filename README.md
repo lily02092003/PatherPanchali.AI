@@ -1,38 +1,86 @@
-## 🌍 Introducing **PotherPanchali.AI**
-### _AI That Plans, Roads That Sing!_
+# 🌍 PotherPanchali.AI
 
-Welcome to **PotherPanchali.AI** — your intelligent travel companion inspired by the cinematic brilliance of Satyajit Ray's iconic film _Pather Panchali_, which translates to _"Song of the Little Road."_ 
+**PotherPanchali.AI** is an AI-driven, culturally inspired, end-to-end personalized travel planner. Inspired by Satyajit Ray's iconic film _Pather Panchali_, it offers a soulful, intuitive, and emotionally engaging way to plan trips—especially for those who seek cultural immersion and nostalgia.
 
-In Bengali:  
-- **Poth** means “road” — the journey.  
-- **Panchali** represents a traditional narrative — a poetic tale that captures the essence of life’s simple yet profound experiences.
-
-Just like the film that threads together life’s struggles and joys into an unforgettable story, **PotherPanchali.AI** aspires to be the digital _panchali_ of modern travelers — especially those seeking inspiration, clarity, and connection in planning their journeys.
+🔗 **Live Demo**: [https://pother-panchali.vercel.app](https://pother-panchali.vercel.app)
 
 ---
 
-### 🚀 What We Offer
+## 🎯 Project Goals
 
-**PotherPanchali.AI** is not just a travel planner — it's a **storyteller** that walks beside you:
-**PotherPanchali.AI** is not just a travel planner — it's a **storyteller** that walks beside you:
-
-- ✨ **Personalized AI-powered itineraries** tailored to your interests and pace  
-- 🌟 Discover **hidden gems** and offbeat experiences curated just for you  
-- 🌐 Navigate unfamiliar destinations with ease and cultural sensitivity  
-- 📖 Turn your trip into a story — one that's meaningful, memorable, and uniquely yours  
+- Democratize and personalize travel planning.
+- Provide intelligent, culturally-aware, emotionally engaging travel suggestions.
+- Optimize travel routes and recommend flights, hotels, and activities.
+- Enable real-time planning with AI chatbots and weather integration.
 
 ---
 
-### 🎯 Our Vision
+## 💡 Features
 
-We believe that **every journey tells a story**, and technology should enrich that tale — not complicate it.  
-With the magic of AI and the spirit of exploration, **PotherPanchali.AI** is here to help you find beauty in the little roads and meaning in every mile.
-
-> **Let PotherPanchali.AI be the narrator of your next adventure.**  
-> 🚗 Roads await. Stories beckon.
+- ✈️ Flight & Hotel Recommendations (via Amadeus & Google Places APIs)
+- 📅 AI-Generated Itineraries (via Gemini API)
+- 💬 Conversational Chatbot – **Durga** for travel tips, visa queries, cultural insights
+- 🧠 Route Optimization using the Travelling Salesman Problem (TSP)
+- 🌦️ Weather Forecast Integration using WeatherAPI
+- 🔐 Google Auth Integration with Firebase
+- 💾 Trip Dashboard to view, edit, and reuse past plans
+- 🧩 Fully Customizable Itinerary (add/delete/rearrange events)
+- 📱 Responsive Design (React + Tailwind CSS)
 
 ---
 
-### 🔖 Tags
+## 🤖 Chatbot: Durga
 
-`#PotherPanchaliAI` `#PatherPanchali` `#TravelAI` `#SmartItinerary`
+- Culturally aware, travel-focused AI companion
+- Responds only to travel-related queries
+- Rejects non-relevant queries gently
+- Built with Gemini LLM using custom prompt instructions
+
+---
+
+## 🚀 Use Case Flow
+
+1. User logs in via Google
+2. Fills trip form with location, date, budget, type
+3. Gets:
+   - AI itinerary (Gemini)
+   - Flight + hotel suggestions
+   - Route optimization (TSP)
+   - Weather forecast
+4. Customizes, saves, and chats with Durga
+5. Accesses trips via the **My Trips** dashboard
+
+---
+
+## 📦 Local Development Setup
+
+```bash
+git clone https://github.com/your-username/PotherPanchali.git
+cd PotherPanchali
+npm install
+npm run dev
+```
+
+> ⚠️ Add environment variables for:
+>
+> - Gemini API
+> - Firebase Config
+> - Amadeus API
+> - WeatherAPI
+> - Google OAuth
+
+---
+
+## 👥 Team
+
+| Name               | Role                   |
+| ------------------ | ---------------------- |
+| Srija Chakraborty  | Project Lead & Backend |
+| Rupkatha Ray       | Frontend Developer     |
+| Aparajita Goswami  | Full Stack Developer   |
+| Sristi Chakraborty | Frontend Developer     |
+| Ananya Roy         | UI/UX & Testing        |
+
+## ❤️ Inspired by
+
+- _Pather Panchali_ (1955) by Satyajit Ray — for its emotional depth, cultural richness, and timeless narrative that this project humbly seeks to echo in the realm of digital travel.
